@@ -34,3 +34,15 @@ export interface LoginMutation {
 export type GlobalError = {
     error: string;
 }
+
+export interface PostApi {
+    _id: string;
+    user: {
+        _id: string;
+        username: string;
+    },
+    title: string;
+    description: string | null;
+    image: string | null;
+    datetime: string;
+}
