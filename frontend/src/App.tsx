@@ -4,6 +4,7 @@ import Home from "./containers/Home";
 import Posts from "./containers/Posts";
 import Register from "./features/user/Register";
 import Login from "./features/user/Login";
+import NewForm from "./containers/NewForm";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Route path='/posts' element={<Posts/>}/>
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/login' element={<Login/>}/>
+                <Route path='/new-post' element={<NewForm/>}/>
             </Route>
         </Routes>
     );

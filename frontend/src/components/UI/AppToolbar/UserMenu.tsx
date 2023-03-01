@@ -30,6 +30,10 @@ const UserMenu: React.FC<Props> = ({user}) => {
         await navigate('/posts');
     };
 
+    const handleNewPost = () => {
+        navigate('/new-post');
+    };
+
     return (
         <>
             <Button
@@ -44,7 +48,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem>Add new post</MenuItem>
+                <MenuItem onClick={handleNewPost}>Add new post</MenuItem>
                 <MenuItem onClick={handleLogout} disabled={loading}>Logout</MenuItem>
             </Menu>
         </>
