@@ -32,7 +32,10 @@ postsRouter.post('/', auth, async (req, res, next) => {
 
 postsRouter.get('/', async (req, res, next) => {
     try {
-        const posts = await Post.find().populate({path: 'user', select: 'username'});
+        const result = await Post.find().populate({path: 'user', select: 'username'});
+        const posts = result.sort((a, b) => {
+            return a.datetime < b.datetime ? 1 : -1;
+        });
         return res.send(posts);
     } catch (e) {
         return next(e);
