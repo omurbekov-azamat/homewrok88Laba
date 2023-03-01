@@ -2,12 +2,13 @@ import express from "express";
 import {Error} from "mongoose";
 import auth, {RequestWithUser} from "../middle/auth";
 import Post from "../modules/Post";
+import {imagesUpload} from "../multer";
 
 const postsRouter = express.Router();
 
-postsRouter.post('/', auth, async (req, res, next) => {
-    if (!req.body.description && !req.body.image) {
-        return res.status(400).send({error: 'Description or Image is required'});
+postsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
+    if (!req.body.description && req.body.image || !req.body.image && req.body.description) {
+        return res.status(400).send({error: 'Description is required'});
     }
     const user = (req as RequestWithUser).user;
     try {
@@ -15,7 +16,7 @@ postsRouter.post('/', auth, async (req, res, next) => {
             user: user.id,
             title: req.body.title,
             description: req.body.description,
-            image: req.body.image,
+            image: req.file ? req.file.filename : null,
             datetime: new Date().toISOString(),
         });
 

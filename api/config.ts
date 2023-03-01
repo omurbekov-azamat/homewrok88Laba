@@ -1,5 +1,11 @@
-const config = {
-    db: 'mongodb://localhost/reddit',
-}
+import path from 'path';
 
-export default config
+const rootPath = __dirname;
+
+const config = {
+    rootPath,
+    publicPath: path.join(rootPath, 'public'),
+    db: 'mongodb://localhost/reddit',
+};
+
+export default config;

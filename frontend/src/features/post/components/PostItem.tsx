@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {Card, Grid, Typography, CardMedia, styled} from "@mui/material";
 import ForumIcon from '@mui/icons-material/Forum';
 import {PostApi} from "../../../types";
+import {apiURL} from "../../../constants";
 
 
 const ImageCardMedia = styled(CardMedia)({
@@ -19,12 +20,12 @@ const PostItem: React.FC<Props> = ({post}) => {
     return (
         <Grid item>
             <Card sx={{width: '600px'}}>
-                <Grid container direction='row' alignItems='center'>
-                    <Grid item xs={1}>
+                <Grid container direction='row' alignItems='center' spacing={2}>
+                    <Grid item xs={3}>
                         {post.image ? (
-                            <ImageCardMedia image={post.image} title={post.title}/>
+                            <ImageCardMedia image={apiURL + '/' + post.image} title={post.title}/>
                         ) : (
-                            <Typography variant="h5" color="red" component="div">
+                            <Typography variant="h5" color="red" component="div" sx={{textAlign: 'center', height: '50px', pt: '20px'}}>
                                 <ForumIcon/>
                             </Typography>
                         )}
