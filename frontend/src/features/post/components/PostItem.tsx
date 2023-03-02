@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 import {NavLink} from "react-router-dom";
 import {Card, Grid, Typography, CardMedia, styled} from "@mui/material";
 import ForumIcon from '@mui/icons-material/Forum';
-import {PostApi} from "../../../types";
 import {apiURL} from "../../../constants";
+import {PostApi} from "../../../types";
 
 
 const ImageCardMedia = styled(CardMedia)({
@@ -25,7 +25,7 @@ const PostItem: React.FC<Props> = ({post}) => {
                         {post.image ? (
                             <ImageCardMedia image={apiURL + '/' + post.image} title={post.title}/>
                         ) : (
-                            <Typography variant="h5" color="red" component="div" sx={{textAlign: 'center', height: '50px', pt: '20px'}}>
+                            <Typography variant="h5" color="red" component="div" sx={{textAlign: 'center', height: '55px', pt: '25px'}}>
                                 <ForumIcon/>
                             </Typography>
                         )}

@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
-import {useAppSelector} from "../app/hook";
+import {useAppDispatch, useAppSelector} from "../app/hook";
 import {selectUser} from "../features/user/usersSlice";
 import ProductForm from "../features/post/components/PostForm";
 import {PostMutation} from "../types";
+import {createNewPost} from "../features/post/postsThunk";
 
-const NewForm = () => {
+const NewPost = () => {
+    const dispatch = useAppDispatch()
     const user = useAppSelector(selectUser);
     const navigate = useNavigate();
 
@@ -16,14 +18,13 @@ const NewForm = () => {
     }, [user]);
 
     const onFormSubmit = async (post: PostMutation) => {
-        console.log(post);
+        await dispatch(createNewPost(post));
+        await navigate('/posts');
     };
 
     return (
-        <>
             <ProductForm onSubmit={onFormSubmit}/>
-        </>
     );
 };
 
-export default NewForm;
+export default NewPost;
