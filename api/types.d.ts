@@ -13,3 +13,9 @@ export interface IPost {
     image: string;
     datetime: string;
 }
+
+export interface IComment {
+    user: ObjectId;
+    post: ObjectId;
+    textComment: string;
+}

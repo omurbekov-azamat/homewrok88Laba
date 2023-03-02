@@ -6,7 +6,8 @@ const PostSchema = new Schema<IPost>({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: {
+        required: true,
+        validate: {
             validator: async (value: Types.ObjectId) => User.findById(value),
             message: 'User does not exist',
         },
