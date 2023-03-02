@@ -52,3 +52,13 @@ export interface PostMutation {
     description: string;
     image: File | null;
 }
+
+export interface CommentApi {
+    _id: string;
+    user: {
+        _id: string;
+        username: string;
+    },
+    post: string;
+    textComment: string;
+}
