@@ -2,14 +2,14 @@ import React, {useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../app/hook";
 import {getOnePost} from "../features/post/postsThunk";
-import {selectOnePost, selectOnePostFetching} from "../features/post/postsSlice";
-import Spinner from "../components/UI/Spinner/Spinner";
-import PostItem from "../features/post/components/PostItem";
-import {selectUser} from "../features/user/usersSlice";
 import {fetchCommentsById} from "../features/comment/commentsThunks";
-import CommentItems from "../features/comment/components/CommentItems";
-import {selectComments, selectCommentsFetching} from "../features/comment/commentsSlice";
+import {selectOnePost, selectOnePostFetching} from "../features/post/postsSlice";
+import {selectCommentsFetching} from "../features/comment/commentsSlice";
+import {selectUser} from "../features/user/usersSlice";
+import PostItem from "../features/post/components/PostItem";
 import {Typography} from "@mui/material";
+import Comments from "../features/comment/Comments";
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const Post = () => {
     const dispatch = useAppDispatch()
@@ -17,7 +17,6 @@ const Post = () => {
     const user = useAppSelector(selectUser);
     const post = useAppSelector(selectOnePost);
     const loading = useAppSelector(selectOnePostFetching);
-    const comments = useAppSelector(selectComments);
     const commentsLoading = useAppSelector(selectCommentsFetching);
 
     useEffect(() => {
@@ -36,7 +35,7 @@ const Post = () => {
             {post && <PostItem post={post}/>}
             {commentsLoading && <Spinner/>}
             {user ? (
-                <CommentItems comments={comments}/>
+                <Comments/>
             ) : (
                 <Typography component='div' variant='h5' sx={{mt: 5}}>
                     You have to <strong style={{color: 'red'}}>Sign In</strong> to see comments

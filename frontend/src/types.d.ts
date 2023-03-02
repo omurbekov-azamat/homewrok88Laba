@@ -62,3 +62,7 @@ export interface CommentApi {
     post: string;
     textComment: string;
 }
+
+export interface CommentMutation {
+    textComment: string;
+}
