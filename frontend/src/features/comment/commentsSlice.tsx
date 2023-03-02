@@ -1,6 +1,7 @@
-import {CommentApi} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
+import {RootState} from "../../app/store";
 import {fetchCommentsById} from "./commentsThunks";
+import {CommentApi} from "../../types";
 
 interface CommentsState {
     comments: CommentApi[];
@@ -18,6 +19,7 @@ export const commentsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchCommentsById.pending, (state) => {
+            state.comments = [];
             state.fetchCommentsLoading = true;
         });
         builder.addCase(fetchCommentsById.fulfilled, (state, {payload: comments}) => {
@@ -31,3 +33,6 @@ export const commentsSlice = createSlice({
 });
 
 export const commentsReducer = commentsSlice.reducer;
+
+export const selectComments = (state:RootState) => state.comments.comments;
+export const selectCommentsFetching = (state: RootState) => state.comments.fetchCommentsLoading;
