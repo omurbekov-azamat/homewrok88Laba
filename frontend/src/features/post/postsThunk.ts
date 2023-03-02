@@ -41,3 +41,15 @@ export const createNewPost = createAsyncThunk<void, PostMutation, {state: RootSt
         }
     }
 );
+
+export const getOnePost = createAsyncThunk<PostApi, string>(
+    'posts/getOnePost',
+    async (id) => {
+        try {
+            const response = await axiosApi.get<PostApi>('/posts/' + id);
+            return response.data
+        } catch (e) {
+            throw e;
+        }
+    }
+)

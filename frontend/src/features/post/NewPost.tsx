@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../app/hook";
-import {selectUser} from "../features/user/usersSlice";
-import ProductForm from "../features/post/components/PostForm";
-import {PostMutation} from "../types";
-import {createNewPost} from "../features/post/postsThunk";
+import {useAppDispatch, useAppSelector} from "../../app/hook";
+import {selectUser} from "../user/usersSlice";
+import ProductForm from "./components/PostForm";
+import {createNewPost, fetchPosts} from "./postsThunk";
+import {PostMutation} from "../../types";
 
 const NewPost = () => {
     const dispatch = useAppDispatch()
@@ -19,6 +19,7 @@ const NewPost = () => {
 
     const onFormSubmit = async (post: PostMutation) => {
         await dispatch(createNewPost(post));
+        await dispatch(fetchPosts());
         await navigate('/posts');
     };
 

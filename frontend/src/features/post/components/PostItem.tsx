@@ -1,6 +1,8 @@
 import React from 'react';
 import dayjs from "dayjs";
 import {NavLink} from "react-router-dom";
+import {useAppSelector} from "../../../app/hook";
+import {selectOnePost} from "../postsSlice";
 import {Card, Grid, Typography, CardMedia, styled} from "@mui/material";
 import ForumIcon from '@mui/icons-material/Forum';
 import {apiURL} from "../../../constants";
@@ -17,6 +19,7 @@ interface Props {
 }
 
 const PostItem: React.FC<Props> = ({post}) => {
+    const postApi = useAppSelector(selectOnePost);
     return (
         <Grid item>
             <Card sx={{width: '600px'}}>
@@ -25,7 +28,8 @@ const PostItem: React.FC<Props> = ({post}) => {
                         {post.image ? (
                             <ImageCardMedia image={apiURL + '/' + post.image} title={post.title}/>
                         ) : (
-                            <Typography variant="h5" color="red" component="div" sx={{textAlign: 'center', height: '55px', pt: '25px'}}>
+                            <Typography variant="h5" color="red" component="div"
+                                        sx={{textAlign: 'center', height: '55px', pt: '25px'}}>
                                 <ForumIcon/>
                             </Typography>
                         )}
@@ -38,10 +42,26 @@ const PostItem: React.FC<Props> = ({post}) => {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Typography component='div'>
-                                    <NavLink to={'/posts/' + post._id}>{post.title}</NavLink>
+                                <Typography component='div' variant='h5' color='lightsalmon'>
+                                    Title: <NavLink to={'/posts/' + post._id} style={{
+                                    color: 'blue',
+                                    textTransform: 'capitalize'
+                                }}>{post.title}</NavLink>
                                 </Typography>
                             </Grid>
+                            {postApi && (
+                                <Grid item>
+                                    {post.description ? (
+                                        <Typography component='div' color='black'>
+                                            Description: {post.description}
+                                        </Typography>
+                                    ) : (
+                                        <Typography component='div' color='red'>
+                                            There is no description!
+                                        </Typography>
+                                    )}
+                                </Grid>
+                            )}
                         </Grid>
                     </Grid>
                 </Grid>
