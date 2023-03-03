@@ -7,9 +7,6 @@ import {imagesUpload} from "../multer";
 const postsRouter = express.Router();
 
 postsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
-    if (!req.body.description && req.body.image || !req.body.image && req.body.description) {
-        return res.status(400).send({error: 'Description is required'});
-    }
     const user = (req as RequestWithUser).user;
     try {
         const post = new Post({
@@ -21,7 +18,7 @@ postsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next)
         });
 
         await post.save();
-        return res.send(post);
+        return res.send({message: 'New post registered successfully!', post});
     } catch (error) {
         if (error instanceof Error.ValidationError) {
             return res.status(400).send(error);

@@ -35,7 +35,7 @@ const Post = () => {
             {post && <PostItem post={post}/>}
             {commentsLoading && <Spinner/>}
             {user ? (
-                <Comments/>
+                <Comments postId={id}/>
             ) : (
                 <Typography component='div' variant='h5' sx={{mt: 5}}>
                     You have to <strong style={{color: 'red'}}>Sign In</strong> to see comments

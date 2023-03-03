@@ -9,14 +9,14 @@ interface Props {
 
 const PostItems: React.FC<Props> = ({posts}) => {
     return (
-            <Grid container direction='column' spacing={2}>
-                {posts.map(post => (
-                    <PostItem
-                        key={post._id}
-                        post={post}
-                    />
-                ))}
-            </Grid>
+        <Grid container direction='column' spacing={2} sx={{mt: 2}}>
+            {posts.map(post => (
+                <PostItem
+                    key={post._id}
+                    post={post}
+                />
+            ))}
+        </Grid>
     );
 };
 

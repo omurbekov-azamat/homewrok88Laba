@@ -1,5 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Box, Button, Grid, TextField} from '@mui/material';
+import {useAppSelector} from "../../../app/hook";
+import {selectPostError} from "../../../features/post/postsSlice";
 
 interface Props {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -8,6 +10,7 @@ interface Props {
 }
 
 const FileInput: React.FC<Props> = ({onChange, name, label}) => {
+    const error = useAppSelector(selectPostError);
     const inputRef = useRef<HTMLInputElement>(null);
     const [filename, setFilename] = useState('');
 
@@ -23,6 +26,14 @@ const FileInput: React.FC<Props> = ({onChange, name, label}) => {
     const activateInput = () => {
         if (inputRef.current) {
             inputRef.current.click();
+        }
+    };
+
+    const getFieldError = (fieldName: string) => {
+        try {
+            return error?.errors[fieldName].message;
+        } catch {
+            return undefined;
         }
     };
 
@@ -42,6 +53,8 @@ const FileInput: React.FC<Props> = ({onChange, name, label}) => {
                         label={label}
                         value={filename}
                         onClick={activateInput}
+                        error={Boolean(getFieldError('image'))}
+                        helperText={getFieldError('image')}
                     />
                 </Grid>
                 <Grid item xs={1}>

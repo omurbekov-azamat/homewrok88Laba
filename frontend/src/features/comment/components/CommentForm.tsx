@@ -1,9 +1,18 @@
 import React, {useState} from 'react';
-import {Avatar, Box, Button, Grid, TextField, Typography} from "@mui/material";
+import {Avatar, Box, Grid, TextField, Typography} from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import {useAppSelector} from "../../../app/hook";
+import {selectCommentCreateLoading, selectCommentError} from "../commentsSlice";
+import {LoadingButton} from "@mui/lab";
 import {CommentMutation} from "../../../types";
 
-const CommentForm = () => {
+interface Props {
+    onSubmit: (comment: CommentMutation) => void;
+}
+
+const CommentForm: React.FC<Props> = ({onSubmit}) => {
+    const loading = useAppSelector(selectCommentCreateLoading);
+    const error = useAppSelector(selectCommentError);
     const [comment, setComment] = useState<CommentMutation>({
         textComment: '',
     });
@@ -15,9 +24,18 @@ const CommentForm = () => {
 
     const submitFormHandler = async (event: React.FormEvent) => {
         event.preventDefault();
+        onSubmit(comment);
         setComment({
             textComment: '',
         });
+    };
+
+    const getFieldError = (fieldName: string) => {
+        try {
+            return error?.errors[fieldName].message;
+        } catch {
+            return undefined;
+        }
     };
 
     return (
@@ -45,17 +63,20 @@ const CommentForm = () => {
                             autoComplete="current-username"
                             value={comment.textComment}
                             onChange={inputChangeHandler}
+                            error={Boolean(getFieldError('textComment'))}
+                            helperText={getFieldError('textComment')}
                         />
                     </Grid>
                     <Grid item>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 3, mb: 2}}
+                        <LoadingButton
+                            type='submit'
+                            color='secondary'
+                            loading={loading}
+                            variant='contained'
+                            sx={{mb: 2}}
                         >
                             Create
-                        </Button>
+                        </LoadingButton>
                     </Grid>
                 </Grid>
             </Box>

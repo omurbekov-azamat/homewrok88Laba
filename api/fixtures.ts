@@ -3,6 +3,7 @@ import config from "./config";
 import User from "./modules/User";
 import {randomUUID} from "crypto";
 import Post from "./modules/Post";
+import comment from "./modules/Comment";
 
 const run = async () => {
     mongoose.set('strictQuery', false);
@@ -18,39 +19,43 @@ const run = async () => {
     }
 
     const [userOne, userTwo] = await User.create({
-        username: 'John Doe',
+        username: 'John',
         password: '123',
         token: randomUUID(),
     }, {
-        username: 'Max Twain',
+        username: 'Max',
         password: '123',
         token: randomUUID(),
     });
 
-    await Post.create({
+    const [postOne, postTwo] = await Post.create({
         user: userOne._id,
         title: 'Looking for job',
-        description: 'Hey guys, i need help',
-        image: 'fixtures/job.jpg',
         datetime: new Date().toISOString(),
     }, {
-        user: userOne._id,
+        user: userTwo._id,
         title: 'Selling my laptop',
         description: 'I am selling my new laptop HP',
         image: 'fixtures/laptop.jpg',
         datetime: new Date().toISOString(),
+    });
+
+    await comment.create({
+        user: userTwo._id,
+        post: postOne._id,
+        textComment: 'What kind of job are you looking for?'
+    }, {
+        user: userOne._id,
+        post: postOne._id,
+        textComment: 'Any job with salary minimum 5000$'
+    }, {
+        user: userOne._id,
+        post: postTwo._id,
+        textComment: 'Can i know the price?',
     }, {
         user: userTwo._id,
-        title: 'I wanna by iphone',
-        description: 'I am looking for iphone 13',
-        image: 'fixtures/iphone.jpg',
-        datetime: new Date().toISOString(),
-    }, {
-        user: userTwo._id,
-        title: 'Selling car',
-        description: 'I am selling car',
-        image: null,
-        datetime: new Date().toISOString(),
+        post: postTwo._id,
+        textComment: 'Any discount?'
     });
     await db.close();
 };

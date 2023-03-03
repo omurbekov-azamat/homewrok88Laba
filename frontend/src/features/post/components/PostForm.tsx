@@ -1,13 +1,19 @@
 import React, {useState} from "react";
-import {Button, Grid, TextField, Typography} from '@mui/material';
+import {Grid, TextField, Typography} from '@mui/material';
 import FileInput from '../../../components/UI/FileInput/FileInput';
+import {useAppSelector} from "../../../app/hook";
+import {selectCreatePostLoading, selectPostError} from "../postsSlice";
+import {LoadingButton} from "@mui/lab";
 import {PostMutation} from '../../../types';
 
 interface Props {
     onSubmit: (mutation: PostMutation) => void;
 }
 
-const ProductForm: React.FC<Props> = ({onSubmit}) => {
+const PostForm: React.FC<Props> = ({onSubmit}) => {
+    const error = useAppSelector(selectPostError);
+    const loading = useAppSelector(selectCreatePostLoading);
+
     const [post, setPost] = useState<PostMutation>({
         title: '',
         description: '',
@@ -38,6 +44,14 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
         }));
     };
 
+    const getFieldError = (fieldName: string) => {
+        try {
+            return error?.errors[fieldName].message;
+        } catch {
+            return undefined;
+        }
+    };
+
     return (
         <form
             autoComplete="off"
@@ -55,6 +69,8 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
                         value={post.title}
                         onChange={inputChangeHandler}
                         name="title"
+                        error={Boolean(getFieldError('title'))}
+                        helperText={getFieldError('title')}
                     />
                 </Grid>
                 <Grid item xs>
@@ -63,6 +79,8 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
                         value={post.description}
                         onChange={inputChangeHandler}
                         name="description"
+                        error={Boolean(getFieldError('description'))}
+                        helperText={getFieldError('description')}
                     />
                 </Grid>
                 <Grid item xs>
@@ -73,11 +91,19 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
                     />
                 </Grid>
                 <Grid item xs>
-                    <Button type="submit" color="primary" variant="contained">Create</Button>
+                    <LoadingButton
+                        type='submit'
+                        color='warning'
+                        loading={loading}
+                        variant='contained'
+                        sx={{mb: 2}}
+                    >
+                        Create
+                    </LoadingButton>
                 </Grid>
             </Grid>
         </form>
     );
 };
 
-export default ProductForm;
+export default PostForm;
