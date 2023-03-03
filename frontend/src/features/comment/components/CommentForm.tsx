@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Avatar, Box, Grid, TextField, Typography} from "@mui/material";
+import {Avatar, Box, Grid, TextField} from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import {useAppSelector} from "../../../app/hook";
 import {selectCommentCreateLoading, selectCommentError} from "../commentsSlice";
@@ -39,47 +39,41 @@ const CommentForm: React.FC<Props> = ({onSubmit}) => {
     };
 
     return (
-        <Box sx={{ml: 3}}>
-            <Box
-                style={{
-                    marginTop: 50,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            />
-            <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                <AddCommentIcon/>
-            </Avatar>
-            <Typography component="h1" variant="h5">
-                Create new comment
-            </Typography>
-            <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            label="comment"
-                            name="textComment"
-                            autoComplete="current-username"
-                            value={comment.textComment}
-                            onChange={inputChangeHandler}
-                            error={Boolean(getFieldError('textComment'))}
-                            helperText={getFieldError('textComment')}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <LoadingButton
-                            type='submit'
-                            color='secondary'
-                            loading={loading}
-                            variant='contained'
-                            sx={{mb: 2}}
-                        >
-                            Create
-                        </LoadingButton>
-                    </Grid>
+        <Box component="form" onSubmit={submitFormHandler}>
+            <Grid
+                container
+                direction='row'
+                alignItems='center'
+                width={500}
+                sx={{m: 5}}
+            >
+                <Grid item xs>
+                    <Avatar sx={{bgcolor: 'secondary.main'}}>
+                        <AddCommentIcon/>
+                    </Avatar>
                 </Grid>
-            </Box>
+                <Grid item xs={7}>
+                    <TextField
+                        label="comment"
+                        name="textComment"
+                        autoComplete="current-username"
+                        value={comment.textComment}
+                        onChange={inputChangeHandler}
+                        error={Boolean(getFieldError('textComment'))}
+                        helperText={getFieldError('textComment')}
+                    />
+                </Grid>
+                <Grid item xs>
+                    <LoadingButton
+                        type='submit'
+                        color='secondary'
+                        loading={loading}
+                        variant='contained'
+                    >
+                        Create
+                    </LoadingButton>
+                </Grid>
+            </Grid>
         </Box>
     );
 };
