@@ -12,7 +12,7 @@ const CommentItem: React.FC<Props> = ({comment}) => {
         <Grid item>
             <Card sx={{width: '600px'}}>
                 <Grid container direction='row' alignItems='center'>
-                    <Grid item xs={3} textAlign='center'>
+                    <Grid item xs={2} textAlign='center'>
                         <Typography>
                             <PersonIcon/>
                         </Typography>

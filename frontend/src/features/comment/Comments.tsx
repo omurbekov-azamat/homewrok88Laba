@@ -5,6 +5,7 @@ import {Typography} from "@mui/material";
 import CommentForm from "./components/CommentForm";
 import CommentItems from "./components/CommentItems";
 import {createComment,} from "./commentsThunks";
+import {selectUser} from "../user/usersSlice";
 import {CommentMutation} from "../../types";
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 const Comments: React.FC<Props> = ({postId}) => {
     const dispatch = useAppDispatch();
     const comments = useAppSelector(selectComments);
+    const user = useAppSelector(selectUser);
 
     let showComment = <Typography sx={{mt: 2, color: 'lightcoral'}}>There is no comments yet!</Typography>
 
@@ -32,7 +34,7 @@ const Comments: React.FC<Props> = ({postId}) => {
     return (
         <>
             {showComment}
-            <CommentForm onSubmit={onSubmit}/>
+            {user && <CommentForm onSubmit={onSubmit}/>}
         </>
     );
 };
