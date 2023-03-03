@@ -51,11 +51,11 @@ const run = async () => {
     }, {
         user: userOne._id,
         post: postTwo._id,
-        textComment: 'Can i know the price?',
+        textComment: 'Any discount?',
     }, {
         user: userTwo._id,
         post: postTwo._id,
-        textComment: 'Any discount?'
+        textComment: 'My laptop is new, the price is 500$!'
     });
     await db.close();
 };

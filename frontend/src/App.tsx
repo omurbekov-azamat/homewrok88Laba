@@ -13,13 +13,12 @@ function App() {
         <Routes>
             <Route path='/' element={<Home/>}>
                 <Route path='/' element={<Posts/>}/>
-                <Route path='/posts' element={<Posts/>}>
-                    <Route path='/posts/new-post' element={<NewPost/>}/>
-                </Route>
+                <Route path='/posts' element={<Posts/>}/>
+                <Route path='/new-post' element={<NewPost/>}/>
                 <Route path='/posts/:id' element={<Post/>}/>
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/login' element={<Login/>}/>
-
+                <Route path='*' element={(<h1>Not found!</h1>)}/>
             </Route>
         </Routes>
     );

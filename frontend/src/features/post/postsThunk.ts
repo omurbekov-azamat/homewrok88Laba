@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
-import {AppDispatch, RootState} from "../../app/store";
+import {RootState} from "../../app/store";
 import {isAxiosError} from "axios";
 import {PostApi, PostMutation, ValidationError} from "../../types";
 
@@ -18,9 +18,9 @@ export const fetchPosts = createAsyncThunk<PostApi[], void>(
     }
 );
 
-export const createNewPost = createAsyncThunk<void, PostMutation, {state: RootState, rejectValue: ValidationError, dispatch: AppDispatch}>(
+export const createNewPost = createAsyncThunk<void, PostMutation, {state: RootState, rejectValue: ValidationError}>(
     'posts/createNewPost',
-    async (postMutation, {getState, rejectWithValue, dispatch}) => {
+    async (postMutation, {getState, rejectWithValue}) => {
         const user = getState().users.user;
         try {
             if (user) {
@@ -36,7 +36,6 @@ export const createNewPost = createAsyncThunk<void, PostMutation, {state: RootSt
                 });
 
                 await axiosApi.post('/posts', formData, {headers: {'Authorization': user.token}});
-                await dispatch(fetchPosts());
             }
         } catch (e) {
             if (isAxiosError(e) && e.response && e.response.status === 400) {

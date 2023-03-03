@@ -31,7 +31,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
     };
 
     const handleNewPost = () => {
-        navigate('/posts/new-post');
+        navigate('/new-post');
     };
 
     return (
